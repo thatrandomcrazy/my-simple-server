@@ -1,20 +1,24 @@
 const express = require("express");
+const path = require("path");
 
 const app = express();
 
-const port = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3000;
 
 app.use(express.static("public"));
 
-app.get("/", (req, res) => {
-  res.sendFile(Path.join(__dirname, "public", "index.html"));
+app.get("/", (request, response) => {
+  response.sendFile(path.join(__dirname, "public", "index.html"));
 });
 
-app.get("/about", (req, res) => {
-  res.sendFile(Path.join(__dirname, "public", "about.html"));
+app.get("/about", (request, response) => {
+  response.sendFile(path.join(__dirname, "public", "about.html"));
 });
 
-// start the server
-app.listen(port, () => {
-  console.log(`Server is listening on port http://localhost:${port}/`);
+app.use((request, response) => {
+  response.sendFile(path.join(__dirname, "public", "not-found.html"));
+});
+
+app.listen(PORT, () => {
+  console.log(`Server listening at http://localhost:${PORT}/`);
 });
